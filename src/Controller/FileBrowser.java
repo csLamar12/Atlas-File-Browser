@@ -16,19 +16,10 @@ public class FileBrowser {
         queue.add(root);
 
         while (!queue.isEmpty()) {
+            // set working directory
             FileNode currentFile = queue.poll();
 
-            // Return a list of FileNode
-            for (FileNode child : currentFile.getChildren()) {
-                if (child.isFile()){
-                    // get metadata info
-                    // set the metadata
-                } else {
-                    // get metadata info
-                    // set metadata
-                }
-                files.add(child);
-            }
+            files.addAll(currentFile.getChildren());
         }
         return files;
     }

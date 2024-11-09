@@ -5,9 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bf36a44c-d11a-492e-8ae4-e30373eca3ed" name="Changes" comment="first commit">
+      <change afterPath="$PROJECT_DIR$/src/Controller/AtlasWindowController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Resources/file.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Resources/folder.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FileBrowserApp.iml" beforeDir="false" afterPath="$PROJECT_DIR$/FileBrowserApp.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FileBrowserApp/Controller/FileBrowser.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/FileBrowserApp/Controller/FileBrowser.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FileBrowserApp/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/FileBrowserApp/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FileBrowserApp/Model/FileNode.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/FileBrowserApp/Model/FileNode.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FileBrowserApp/View/DrivePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/FileBrowserApp/View/DrivePanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FileBrowserApp/View/DriveSelectWindow.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/FileBrowserApp/View/FilePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/FileBrowserApp/View/FilePanel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/FileBrowserApp/View/OptionScreen.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/FileBrowser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/FileBrowser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/FileNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/FileNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/View/AtlasWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/AtlasWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/View/DrivePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/DrivePanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/View/FilePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/FilePanel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -38,12 +51,12 @@
     &quot;assignee&quot;: &quot;csLamar12&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/csLamar12/Atlas-File-Browser.git",
-    "accountId": "02de9c49-d9ac-4223-93b9-621c2b16c58e"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/csLamar12/Atlas-File-Browser.git&quot;,
+    &quot;accountId&quot;: &quot;02de9c49-d9ac-4223-93b9-621c2b16c58e&quot;
   }
-}]]></component>
+}</component>
   <component name="KubernetesApiPersistence">{}</component>
   <component name="KubernetesApiProvider">{
   &quot;isMigrated&quot;: true
@@ -63,35 +76,28 @@
     "Application.Main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/lamar/Documents/Java/Advanced Programming/FileBrowserApp/src",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager">
-    <configuration name="FilePanel" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="View.FilePanel" />
-      <module name="FileBrowserApp" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="View.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Application.FilePanel" />
-      </list>
-    </recent_temporary>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/Resources" />
+      <recent name="$PROJECT_DIR$/src/JarFiles" />
+    </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
