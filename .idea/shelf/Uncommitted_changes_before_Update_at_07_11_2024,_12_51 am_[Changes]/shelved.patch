@@ -1,0 +1,64 @@
+Index: .gitignore
+===================================================================
+diff --git a/.gitignore b/.gitignore
+deleted file mode 100644
+--- a/.gitignore	(revision b31b21ce1e5ef37c82a3b5b94ad6683600b88175)
++++ /dev/null	(revision b31b21ce1e5ef37c82a3b5b94ad6683600b88175)
+@@ -1,29 +0,0 @@
+-### IntelliJ IDEA ###
+-out/
+-!**/src/main/**/out/
+-!**/src/test/**/out/
+-
+-### Eclipse ###
+-.apt_generated
+-.classpath
+-.factorypath
+-.project
+-.settings
+-.springBeans
+-.sts4-cache
+-bin/
+-!**/src/main/**/bin/
+-!**/src/test/**/bin/
+-
+-### NetBeans ###
+-/nbproject/private/
+-/nbbuild/
+-/dist/
+-/nbdist/
+-/.nb-gradle/
+-
+-### VS Code ###
+-.vscode/
+-
+-### Mac OS ###
+-.DS_Store
+\ No newline at end of file
+Index: .idea/.gitignore
+===================================================================
+diff --git a/.idea/.gitignore b/.idea/.gitignore
+deleted file mode 100644
+--- a/.idea/.gitignore	(revision b31b21ce1e5ef37c82a3b5b94ad6683600b88175)
++++ /dev/null	(revision b31b21ce1e5ef37c82a3b5b94ad6683600b88175)
+@@ -1,8 +0,0 @@
+-# Default ignored files
+-/shelf/
+-/workspace.xml
+-# Editor-based HTTP Client requests
+-/httpRequests/
+-# Datasource local storage ignored files
+-/dataSources/
+-/dataSources.local.xml
+Index: .idea/vcs.xml
+===================================================================
+diff --git a/.idea/vcs.xml b/.idea/vcs.xml
+deleted file mode 100644
+--- a/.idea/vcs.xml	(revision b31b21ce1e5ef37c82a3b5b94ad6683600b88175)
++++ /dev/null	(revision b31b21ce1e5ef37c82a3b5b94ad6683600b88175)
+@@ -1,4 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="VcsDirectoryMappings" defaultProject="true" />
+-</project>
+\ No newline at end of file
