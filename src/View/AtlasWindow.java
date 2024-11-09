@@ -2,10 +2,10 @@ package View;
 
 import javax.swing.*;
 
-public class DriveSelectWindow extends JFrame {
+public class AtlasWindow extends JFrame {
 
 
-    public DriveSelectWindow() {
+    public AtlasWindow() {
         setTitle("Atlas");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 600);
