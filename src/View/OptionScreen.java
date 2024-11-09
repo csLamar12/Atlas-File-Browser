@@ -84,29 +84,6 @@ public class OptionScreen extends JFrame implements ActionListener{
 
     public void actionPerformed(ActionEvent ae){
         if(ae.getSource().equals(btnHd)){
-            fileChooser.setDialogTitle("Hard Drive");
-            fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-
-            userSelection = fileChooser.showOpenDialog(this);
-            if (userSelection == JFileChooser.APPROVE_OPTION) {
-                File selectedFile = fileChooser.getSelectedFile();
-            }
-        }
-        else if(ae.getSource().equals(btnFolder)){
-            fileChooser.setDialogTitle("Folder");
-
-            userSelection = fileChooser.showOpenDialog(null);
-        }
-        else if(ae.getSource().equals(btnSsd)){
-            fileChooser.setDialogTitle("SSD Drive");
-
-        }
-        else if(ae.getSource().equals(btnNetshare)){
-            fileChooser.setDialogTitle("Network Share");
-
-        }
-        else if(ae.getSource().equals(btnCloud)){
-            fileChooser.setDialogTitle("Cloud Storage");
 
         }
     }
