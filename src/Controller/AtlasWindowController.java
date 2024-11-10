@@ -12,11 +12,12 @@ import java.awt.event.MouseEvent;
 public class AtlasWindowController {
     private AtlasWindow atlasWindow;
     private NavigationHistory navigationHistory = new NavigationHistory();
-    private String fileNodePath, currentDirectory;
+    private String currentDirectory;
 
     public AtlasWindowController(AtlasWindow atlasWindow, String currentDirectory) {
         this.atlasWindow = atlasWindow;
         this.currentDirectory = currentDirectory;
+        showWorkingDirectory();
         bindButtonEvents();
     }
 
@@ -31,7 +32,7 @@ public class AtlasWindowController {
                     onSelect(selectedFileNode);
                     if (e.getClickCount() == 2) {
                         onRowDoubleClicked(selectedFileNode);
-                        fileNodePath = selectedFileNode.getAbsolutePath();
+                        currentDirectory = selectedFileNode.getAbsolutePath();
                     }
                 }
             }
@@ -44,6 +45,7 @@ public class AtlasWindowController {
                     return;
                 currentDirectory = fileNode.getAbsolutePath();
                 atlasWindow.expandFolder(fileNode.getChildren());
+                showWorkingDirectory();
             }
         });
         atlasWindow.getForwardBtn().addActionListener(new ActionListener() {
@@ -54,10 +56,14 @@ public class AtlasWindowController {
                     return;
                 currentDirectory = fileNode.getAbsolutePath();
                 atlasWindow.expandFolder(fileNode.getChildren());
+                showWorkingDirectory();
             }
         });
     }
 
+    public void showWorkingDirectory(){
+        atlasWindow.setWorkingDir(currentDirectory);
+    }
 
     public void onSelect(FileNode selectedFileNode){
         atlasWindow.showPreviewPane();
@@ -69,6 +75,7 @@ public class AtlasWindowController {
             navigationHistory.visitDirectory(currentDirectory);
             currentDirectory = selectedFileNode.getAbsolutePath();
             atlasWindow.expandFolder(selectedFileNode.getChildren());
+            showWorkingDirectory();
         } // TODO - else open the file
     }
 }

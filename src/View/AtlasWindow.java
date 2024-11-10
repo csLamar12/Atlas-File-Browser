@@ -20,6 +20,8 @@ public class AtlasWindow extends JFrame {
     private JButton backBtn, forwardBtn;
     private JScrollPane scrollPane;
     private JSplitPane splitPane;
+    private String workingDirectory;
+    private JLabel currentDirectory;
 
     public AtlasWindow() {
         setTitle("Atlas");
@@ -151,8 +153,11 @@ public class AtlasWindow extends JFrame {
 
     public void initAddressBar(){
         JPanel panel = new JPanel();
-        panel.setPreferredSize(new Dimension(800, 20));
-        pSPanel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1));
+        panel.setPreferredSize(new Dimension(800, 25));
+        panel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1));
+        panel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        currentDirectory = new JLabel(workingDirectory);
+        panel.add(currentDirectory);
         add(panel, BorderLayout.SOUTH);
     }
 
@@ -161,6 +166,7 @@ public class AtlasWindow extends JFrame {
         fileNodeMap.clear();
         int x = 0;
 
+        // TODO - This should be in FileNode class
         for(FileNode fileNode : fileNodes){
             Object[] row = {
                     fileNode.getImg(),
@@ -221,5 +227,10 @@ public class AtlasWindow extends JFrame {
 
     public void setForwardBtn(JButton forwardBtn) {
         this.forwardBtn = forwardBtn;
+    }
+    public void setWorkingDir(String workingDir){
+        this.workingDirectory = workingDir;
+        currentDirectory.setText(workingDirectory);
+        repaint();
     }
 }

@@ -10,7 +10,7 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/src/JarFiles/tika-app-3.0.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/JarFiles/jcifs-ng-2.1.10.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

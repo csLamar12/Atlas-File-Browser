@@ -1,7 +1,5 @@
 package Model;
 
-import org.apache.tika.Tika;
-
 import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
@@ -17,7 +15,6 @@ public class FileNode {
     private Map<String, Object> metadata = new HashMap<>();
     private List<FileNode> children = new ArrayList<>();
     private File file;
-    private Tika tika = new Tika();
 
 
     public FileNode(File file) {
@@ -159,14 +156,6 @@ public class FileNode {
 
     public void setFile(File file) {
         this.file = file;
-    }
-
-    public Tika getTika() {
-        return tika;
-    }
-
-    public void setTika(Tika tika) {
-        this.tika = tika;
     }
 
     public ImageIcon getImg() {
