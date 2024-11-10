@@ -10,7 +10,7 @@ import java.util.*;
 
 public class FileNode {
     private ImageIcon img;
-    private String name, type, lastModified;
+    private String name, type = null, lastModified;
     private long size;
     private SimpleDateFormat dateFormat;
     private boolean isFile;
@@ -62,7 +62,8 @@ public class FileNode {
     }
 
     public String getType() {
-        detectFileType();
+        if (type == null) detectFileType();
+
         return type;
     }
 
@@ -75,7 +76,8 @@ public class FileNode {
         }
         try{
             img = new ImageIcon("src/Resources/file.png");
-            this.type = tika.detect(file);
+            FileSignatureReader fsr = new FileSignatureReader(this.file);
+            this.type = fsr.readFileSignature();
         } catch (IOException e){
             e.printStackTrace();
             this.type = "File";

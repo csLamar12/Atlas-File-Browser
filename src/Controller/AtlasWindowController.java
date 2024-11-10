@@ -24,21 +24,16 @@ public class AtlasWindowController {
         atlasWindow.getFileTable().addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                if(e.getClickCount() == 2){
-                    int row = atlasWindow.getFileTable().getSelectedRow();
-                    if(row != -1){
-                        FileNode selectedFileNode = atlasWindow.getFileNodeMap().get(row);
-                        if(selectedFileNode != null){
-                            onRowDoubleClicked(selectedFileNode);
-                            fileNodePath = selectedFileNode.getAbsolutePath();
-                        }
+                int row = atlasWindow.getFileTable().getSelectedRow();
+                FileNode selectedFileNode;
+                if(row != -1) {
+                    selectedFileNode = atlasWindow.getFileNodeMap().get(row);
+                    onSelect(selectedFileNode);
+                    if (e.getClickCount() == 2) {
+                        onRowDoubleClicked(selectedFileNode);
+                        fileNodePath = selectedFileNode.getAbsolutePath();
                     }
                 }
-            }
-
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                atlasWindow.showPreviewPane();
             }
         });
         atlasWindow.getBackBtn().addActionListener(new ActionListener() {
@@ -64,12 +59,16 @@ public class AtlasWindowController {
     }
 
 
+    public void onSelect(FileNode selectedFileNode){
+        atlasWindow.showPreviewPane();
+        selectedFileNode.getType();
+    }
 
     public void onRowDoubleClicked(FileNode selectedFileNode) {
         if (!selectedFileNode.isFile()) {
             navigationHistory.visitDirectory(currentDirectory);
             currentDirectory = selectedFileNode.getAbsolutePath();
             atlasWindow.expandFolder(selectedFileNode.getChildren());
-        }
+        } // TODO - else open the file
     }
 }

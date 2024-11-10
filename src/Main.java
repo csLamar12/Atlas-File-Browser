@@ -12,5 +12,6 @@ public class Main {
         AtlasWindow browser = new AtlasWindow();
         new AtlasWindowController(browser, file.getAbsolutePath());
         browser.expandFolder(root.getChildren());
+
     }
 }

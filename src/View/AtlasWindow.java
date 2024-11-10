@@ -16,7 +16,7 @@ public class AtlasWindow extends JFrame {
     private DefaultTableModel tableModel;
     private Map<Integer, FileNode> fileNodeMap = new HashMap<>();
     // Header Panel components
-    private JPanel headerPanel, previewPanel;
+    private JPanel headerPanel, pSPanel, previewPanel, summaryPanel;
     private JButton backBtn, forwardBtn;
     private JScrollPane scrollPane;
     private JSplitPane splitPane;
@@ -62,12 +62,28 @@ public class AtlasWindow extends JFrame {
     }
 
     public void initPreview_Summary(){
-        previewPanel = new JPanel();
-        previewPanel.setPreferredSize(new Dimension(250, 250));
-        previewPanel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1));
-        add(previewPanel, BorderLayout.EAST);
+        pSPanel = new JPanel();
+        pSPanel.setPreferredSize(new Dimension(250, 250));
+        pSPanel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1));
+        pSPanel.setLayout(new BorderLayout());
 
-        splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, scrollPane, previewPanel);
+        JLabel pPLabel = new JLabel("Preview", JLabel.CENTER);
+        pPLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
+
+        // ToDO - create a preview panel
+        previewPanel = new JPanel();
+        previewPanel.setPreferredSize(new Dimension(220, 120));
+        previewPanel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1));
+        // ToDO - Create a summary panel
+        summaryPanel = new JPanel();
+        summaryPanel.setPreferredSize(new Dimension(220, 90));
+        // TODO - Add them to the pSPanel
+        pSPanel.add(pPLabel, BorderLayout.NORTH);
+        pSPanel.add(previewPanel, BorderLayout.CENTER);
+        pSPanel.add(summaryPanel, BorderLayout.SOUTH);
+        add(pSPanel, BorderLayout.EAST);
+
+        splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, scrollPane, pSPanel);
         splitPane.setDividerLocation(800); // Initial position of the divider
         splitPane.setResizeWeight(0.5); // Allows both panels to resize proportionally
         splitPane.setOneTouchExpandable(true); // Adds a small arrow to collapse/expand
@@ -136,7 +152,7 @@ public class AtlasWindow extends JFrame {
     public void initAddressBar(){
         JPanel panel = new JPanel();
         panel.setPreferredSize(new Dimension(800, 20));
-        previewPanel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1));
+        pSPanel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1));
         add(panel, BorderLayout.SOUTH);
     }
 

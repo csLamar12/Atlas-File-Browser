@@ -4,24 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bf36a44c-d11a-492e-8ae4-e30373eca3ed" name="Changes" comment="first commit">
-      <change afterPath="$PROJECT_DIR$/src/Controller/AtlasWindowController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Resources/file.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Resources/folder.png" afterDir="false" />
+    <list default="true" id="bf36a44c-d11a-492e-8ae4-e30373eca3ed" name="Changes" comment="Basic outline for File Browser implemented and some functionality">
+      <change afterPath="$PROJECT_DIR$/out/production/FileBrowserApp/JarFiles/tika-app-3.0.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/JarFiles/tika-app-3.0.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Model/FileSignatureReader.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FileBrowserApp.iml" beforeDir="false" afterPath="$PROJECT_DIR$/FileBrowserApp.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/FileBrowserApp/Controller/FileBrowser.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/FileBrowserApp/Controller/FileBrowser.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FileBrowserApp/Controller/AtlasWindowController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/FileBrowserApp/Controller/AtlasWindowController$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FileBrowserApp/Controller/AtlasWindowController$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/FileBrowserApp/Controller/AtlasWindowController$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FileBrowserApp/Controller/AtlasWindowController$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/FileBrowserApp/Controller/AtlasWindowController$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FileBrowserApp/Controller/AtlasWindowController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/FileBrowserApp/Controller/AtlasWindowController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/FileBrowserApp/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/FileBrowserApp/Main.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/FileBrowserApp/Model/FileNode.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/FileBrowserApp/Model/FileNode.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/FileBrowserApp/View/DrivePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/FileBrowserApp/View/DrivePanel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/FileBrowserApp/View/DriveSelectWindow.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/FileBrowserApp/View/FilePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/FileBrowserApp/View/FilePanel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/FileBrowser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/FileBrowser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FileBrowserApp/View/AtlasWindow.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/AtlasWindowController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/AtlasWindowController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Model/FileNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/FileNode.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/View/AtlasWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/AtlasWindow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/View/DrivePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/DrivePanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/View/FilePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/FilePanel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,6 +72,7 @@
   "keyToString": {
     "Application.FilePanel.executor": "Run",
     "Application.Main.executor": "Run",
+    "Application.Main2.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
@@ -126,7 +125,23 @@
       <option name="project" value="LOCAL" />
       <updated>1730958742366</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Basic outline for File Browser implemented and some functionality">
+      <option name="closed" value="true" />
+      <created>1731165221004</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1731165221004</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Basic outline for File Browser implemented and some functionality">
+      <option name="closed" value="true" />
+      <created>1731165248046</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1731165248046</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -147,6 +162,7 @@
     <MESSAGE value="jk" />
     <MESSAGE value="first commit" />
     <MESSAGE value="c" />
-    <option name="LAST_COMMIT_MESSAGE" value="c" />
+    <MESSAGE value="Basic outline for File Browser implemented and some functionality" />
+    <option name="LAST_COMMIT_MESSAGE" value="Basic outline for File Browser implemented and some functionality" />
   </component>
 </project>
