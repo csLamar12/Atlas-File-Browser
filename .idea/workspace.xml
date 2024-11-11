@@ -5,21 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bf36a44c-d11a-492e-8ae4-e30373eca3ed" name="Changes" comment="Basic outline for File Browser implemented and some functionality">
-      <change afterPath="$PROJECT_DIR$/src/Model/DriveDetector.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FileBrowserApp.iml" beforeDir="false" afterPath="$PROJECT_DIR$/FileBrowserApp.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/FileBrowserApp/Controller/AtlasWindowController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/FileBrowserApp/Controller/AtlasWindowController$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/FileBrowserApp/Controller/AtlasWindowController$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/FileBrowserApp/Controller/AtlasWindowController$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/FileBrowserApp/Controller/AtlasWindowController$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/FileBrowserApp/Controller/AtlasWindowController$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/FileBrowserApp/Controller/AtlasWindowController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/FileBrowserApp/Controller/AtlasWindowController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/FileBrowserApp/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/FileBrowserApp/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/FileBrowserApp/Model/FileNode.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/FileBrowserApp/Model/FileNode.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FileBrowserApp/Controller/FileBrowser.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/FileBrowserApp/Controller/FileBrowser.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FileBrowserApp/Main2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/FileBrowserApp/Main2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FileBrowserApp/Model/DriveDetector.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/FileBrowserApp/Model/DriveDetector.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/FileBrowserApp/View/AtlasWindow.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/FileBrowserApp/View/AtlasWindow.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/AtlasWindowController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/AtlasWindowController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FileBrowserApp/View/FilePanel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/FileBrowser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/FileBrowser.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/DriveDetector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/DriveDetector.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Model/FileNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/FileNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/FileSignatureReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/FileSignatureReader.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/View/AtlasWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/AtlasWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/View/FilePanel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/View/FolderPanel.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,13 +69,13 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.DriveDetector.executor": "Run",
+    "Application.AtlasWindow.executor": "Run",
     "Application.FilePanel.executor": "Run",
     "Application.Main.executor": "Run",
     "Application.Main2.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "master",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/Users/lamar/Documents/Java/Advanced Programming/FileBrowserApp/src",
     "node.js.detected.package.eslint": "true",
@@ -85,8 +84,8 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -95,9 +94,29 @@
       <recent name="$PROJECT_DIR$/src" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/JarFiles" />
       <recent name="$PROJECT_DIR$/src/Resources" />
+      <recent name="$PROJECT_DIR$/src/JarFiles" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="AtlasWindow" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="View.AtlasWindow" />
+      <module name="FileBrowserApp" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="View.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.AtlasWindow" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -142,15 +161,7 @@
       <option name="project" value="LOCAL" />
       <updated>1731165248046</updated>
     </task>
-    <task id="LOCAL-00005" summary="Basic outline for File Browser implemented and some functionality">
-      <option name="closed" value="true" />
-      <created>1731204062873</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1731204062873</updated>
-    </task>
-    <option name="localTasksCounter" value="6" />
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

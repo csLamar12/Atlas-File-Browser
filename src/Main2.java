@@ -29,7 +29,13 @@ public class Main2 {
 //            }
 //        }
 
-        DriveDetector driveDetector = new DriveDetector();
+        File file = new File("C:\\");
+        File[] files = file.listFiles();
+        for (File f : files){
+            System.out.println(f);
+        }
+
+//        DriveDetector driveDetector = new DriveDetector();
 
     }
 }

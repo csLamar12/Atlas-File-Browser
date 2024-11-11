@@ -53,8 +53,8 @@ public class AtlasWindow extends JFrame {
         backBtn.setFont(new Font("Tahoma", Font.BOLD, 12));
         forwardBtn.setFont(new Font("Tahoma", Font.BOLD, 12));
 
-        c.insets = new Insets(5, 0, 5, 0);
-        c.anchor = GridBagConstraints.NORTHWEST;
+        c.insets = new Insets(5, 5, 5, 0);
+        c.anchor = GridBagConstraints.WEST;
         c.gridx = 0;
         c.gridy = 0;
         headerPanel.add(backBtn, c);
@@ -62,6 +62,7 @@ public class AtlasWindow extends JFrame {
         headerPanel.add(forwardBtn, c);
         add(headerPanel, BorderLayout.NORTH);
     }
+
 
     public void initPreview_Summary(){
         pSPanel = new JPanel();
@@ -116,6 +117,8 @@ public class AtlasWindow extends JFrame {
         };
         fileTable.setFillsViewportHeight(true);
         fileTable.getTableHeader().setReorderingAllowed(false);
+        fileTable.setShowGrid(false);
+        //ToDo remove header background and add line
 
         // Adjust icon column
         TableColumn iconColumn = fileTable.getColumnModel().getColumn(0);
@@ -156,7 +159,7 @@ public class AtlasWindow extends JFrame {
         panel.setPreferredSize(new Dimension(800, 25));
         panel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1));
         panel.setLayout(new FlowLayout(FlowLayout.LEFT));
-        currentDirectory = new JLabel(workingDirectory);
+        currentDirectory = new JLabel();
         panel.add(currentDirectory);
         add(panel, BorderLayout.SOUTH);
     }
@@ -229,8 +232,8 @@ public class AtlasWindow extends JFrame {
         this.forwardBtn = forwardBtn;
     }
     public void setWorkingDir(String workingDir){
-        this.workingDirectory = workingDir;
-        currentDirectory.setText(workingDirectory);
+        currentDirectory.setText(workingDir);
         repaint();
     }
+
 }

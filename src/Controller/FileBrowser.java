@@ -20,6 +20,7 @@ public class FileBrowser {
             FileNode currentFile = queue.poll();
 
             files.addAll(currentFile.getChildren());
+
         }
         return files;
     }

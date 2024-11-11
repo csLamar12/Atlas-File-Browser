@@ -76,7 +76,8 @@ public class FileNode {
             FileSignatureReader fsr = new FileSignatureReader(this.file);
             this.type = fsr.readFileSignature();
         } catch (IOException e){
-            e.printStackTrace();
+            System.out.println("reached");
+//            e.printStackTrace();
             this.type = "File";
         }
     }
