@@ -29,13 +29,11 @@ public class Main2 {
 //            }
 //        }
 
-        File file = new File("C:\\");
-        File[] files = file.listFiles();
-        for (File f : files){
-            System.out.println(f);
+        File[] files = File.listRoots();
+        for (File file : files) {
+            System.out.println(file);
         }
 
-//        DriveDetector driveDetector = new DriveDetector();
 
     }
 }

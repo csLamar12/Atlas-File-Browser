@@ -1,0 +1,19 @@
+<changelist name="Uncommitted_changes_before_Update_at_11_11_2024,_2_48 am_[Changes]" date="1731311295780" recycled="false" toDelete="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_11_11_2024,_2_48 am_[Changes]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Update at 11/11/2024, 2:48 am [Changes]" />
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/FileBrowserApp/Model/DriveDetector.class" />
+    <option name="AFTER_PATH" value="out/production/FileBrowserApp/Model/DriveDetector.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_11_11_2024,_2_48 am_[Changes]/DriveDetector.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/FileBrowserApp/View/AtlasWindow.class" />
+    <option name="AFTER_PATH" value="out/production/FileBrowserApp/View/AtlasWindow.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_11_11_2024,_2_48 am_[Changes]/AtlasWindow.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/FileBrowserApp/Main2.class" />
+    <option name="AFTER_PATH" value="out/production/FileBrowserApp/Main2.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_11_11_2024,_2_48 am_[Changes]/Main2.class" />
+  </binary>
+</changelist>

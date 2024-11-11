@@ -12,7 +12,9 @@ public class NavigationHistory {
         if (!backHistory.isEmpty()) {
             forwardHistory.push(currentDirectory);
             String prevDirectory = backHistory.pop();
-            return new FileNode(new File(prevDirectory));
+            if (!prevDirectory.equals("Volumes"))
+                return new FileNode(new File(prevDirectory));
+            return null;
         }
         return null;
     }
@@ -21,7 +23,6 @@ public class NavigationHistory {
         if (!forwardHistory.isEmpty()) {
             backHistory.push(currentDirectory);
             String nextDirectory = forwardHistory.pop();
-
             return new FileNode(new File(nextDirectory));
         }
         return null;

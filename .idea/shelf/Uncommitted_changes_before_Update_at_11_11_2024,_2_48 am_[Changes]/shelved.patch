@@ -1,0 +1,296 @@
+Index: src/Model/DriveDetector.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package Model;\n\n\nimport java.io.File;\n\npublic class DriveDetector {\n\n    public DriveDetector(){\n        File[] files = File.listRoots();\n        for (File file : files) {\n            FileNode fileNode = new FileNode(file);\n            System.out.println(fileNode);\n        }\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/Model/DriveDetector.java b/src/Model/DriveDetector.java
+--- a/src/Model/DriveDetector.java	(revision 80c0a826115f66c896b2122849d4b94c63c5c791)
++++ b/src/Model/DriveDetector.java	(date 1731264286133)
+@@ -1,15 +1,76 @@
+ package Model;
+ 
+-
+-import java.io.File;
++import java.io.*;
+ 
+ public class DriveDetector {
+ 
+-    public DriveDetector(){
++    public DriveDetector() {
++        // Get the list of file roots (like / or C:\)
+         File[] files = File.listRoots();
+         for (File file : files) {
+-            FileNode fileNode = new FileNode(file);
+-            System.out.println(fileNode);
+-        }
+-    }
+-}
+\ No newline at end of file
++            // Get the name of the volume associated with the root
++            String volumeName = getVolumeName(file);
++            if (volumeName != null) {
++                System.out.println("Volume: " + volumeName + " at " + file.getAbsolutePath());
++            } else {
++                System.out.println("Root: " + file.getAbsolutePath());
++            }
++        }
++    }
++
++    private String getVolumeName(File file) {
++        String os = System.getProperty("os.name").toLowerCase();
++        if (os.contains("mac")) {
++            return getVolumeNameForMac(file);
++        } else if (os.contains("win")) {
++            return getVolumeNameForWindows(file);
++        }
++        return null;  // Return null if no method is defined for the OS
++    }
++
++    private String getVolumeNameForMac(File file) {
++        try {
++            // For macOS, use the diskutil command to get volume names
++            ProcessBuilder builder = new ProcessBuilder("diskutil", "info", file.getAbsolutePath());
++            builder.redirectErrorStream(true);
++            Process process = builder.start();
++
++            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
++            String line;
++            while ((line = reader.readLine()) != null) {
++                // Look for the line containing "Volume Name"
++                if (line.contains("Volume Name")) {
++                    // Extract and return the volume name
++                    return line.split(":")[1].trim();
++                }
++            }
++        } catch (IOException e) {
++            e.printStackTrace();
++        }
++        return null;  // Return null if no volume name is found
++    }
++
++    private String getVolumeNameForWindows(File file) {
++        try {
++            // For Windows, use the wmic command to get volume labels
++            ProcessBuilder builder = new ProcessBuilder("wmic", "logicaldisk", "get", "caption,volumeName");
++            builder.redirectErrorStream(true);
++            Process process = builder.start();
++
++            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
++            String line;
++            while ((line = reader.readLine()) != null) {
++                // Each line contains the drive letter and volume name
++                if (line.trim().startsWith(file.getAbsolutePath().substring(0, 2))) {
++                    String[] parts = line.trim().split("\\s+");
++                    if (parts.length > 1) {
++                        return parts[1];  // Return the volume name
++                    }
++                }
++            }
++        } catch (IOException e) {
++            e.printStackTrace();
++        }
++        return null;  // Return null if no volume name is found
++    }
++}
+Index: src/Main2.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import Model.DriveDetector;\nimport Model.FileNode;\nimport Model.FileSignatureReader;\n\nimport java.io.File;\nimport java.io.IOException;\nimport java.util.ArrayList;\nimport java.util.List;\n\n\npublic class Main2 {\n    public static void main(String[] args) {\n//        File file = new File(\"/Users/lamar/Movies/TV/Media.localized/Movies/Naruto Shippuden Episode 035 An Unnecessary Addition.mkv\");\n//        FileSignatureReader fsr = new FileSignatureReader(file);\n//        try {\n//            System.out.println(fsr.readFileSignature());\n//        } catch (IOException e) {\n//            throw new RuntimeException(e);\n//        }\n\n//        List<FileNode> drives = new ArrayList<>();\n//        File[] roots = File.listRoots(); // Get the root drives on the system\n//\n//        for (File root : roots) {\n//            System.out.println(root.getAbsolutePath());\n//            if (root.canRead()) {\n//                FileNode driveNode = new FileNode(root);\n//                drives.add(driveNode);\n//            }\n//        }\n\n        DriveDetector driveDetector = new DriveDetector();\n\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/Main2.java b/src/Main2.java
+--- a/src/Main2.java	(revision 80c0a826115f66c896b2122849d4b94c63c5c791)
++++ b/src/Main2.java	(date 1731263636071)
+@@ -18,7 +18,7 @@
+ //            throw new RuntimeException(e);
+ //        }
+ 
+-//        List<FileNode> drives = new ArrayList<>();
++//        List<FilefNode> drives = new ArrayList<>();
+ //        File[] roots = File.listRoots(); // Get the root drives on the system
+ //
+ //        for (File root : roots) {
+Index: src/View/AtlasWindow.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package View;\n\nimport Model.FileNode;\n\nimport javax.swing.*;\nimport javax.swing.table.DefaultTableModel;\nimport javax.swing.table.TableColumn;\nimport javax.swing.table.TableRowSorter;\nimport java.awt.*;\nimport java.util.HashMap;\nimport java.util.List;\nimport java.util.Map;\n\npublic class AtlasWindow extends JFrame {\n    private JTable fileTable;\n    private DefaultTableModel tableModel;\n    private Map<Integer, FileNode> fileNodeMap = new HashMap<>();\n    // Header Panel components\n    private JPanel headerPanel, pSPanel, previewPanel, summaryPanel;\n    private JButton backBtn, forwardBtn;\n    private JScrollPane scrollPane;\n    private JSplitPane splitPane;\n    private String workingDirectory;\n    private JLabel currentDirectory;\n\n    public AtlasWindow() {\n        setTitle(\"Atlas\");\n        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);\n        setSize(800, 600);\n        setLocationRelativeTo(null);\n        setVisible(true);\n\n        // Show drive Panels with available volumes\n\n        // When folders are available for viewing\n        initHeader();\n        initTable();\n        initPreview_Summary();\n        initAddressBar();\n\n        revalidate();\n        repaint();\n    }\n\n    public void initHeader(){\n        headerPanel = new JPanel();\n        headerPanel.setLayout(new GridBagLayout());\n        GridBagConstraints c = new GridBagConstraints();\n        headerPanel.setPreferredSize(new Dimension(800, 60));\n\n        backBtn = new JButton(\"<\");\n        forwardBtn = new JButton(\">\");\n        backBtn.setFont(new Font(\"Tahoma\", Font.BOLD, 12));\n        forwardBtn.setFont(new Font(\"Tahoma\", Font.BOLD, 12));\n\n        c.insets = new Insets(5, 0, 5, 0);\n        c.anchor = GridBagConstraints.NORTHWEST;\n        c.gridx = 0;\n        c.gridy = 0;\n        headerPanel.add(backBtn, c);\n        c.gridx = 1;\n        headerPanel.add(forwardBtn, c);\n        add(headerPanel, BorderLayout.NORTH);\n    }\n\n    public void initPreview_Summary(){\n        pSPanel = new JPanel();\n        pSPanel.setPreferredSize(new Dimension(250, 250));\n        pSPanel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1));\n        pSPanel.setLayout(new BorderLayout());\n\n        JLabel pPLabel = new JLabel(\"Preview\", JLabel.CENTER);\n        pPLabel.setFont(new Font(\"Tahoma\", Font.BOLD, 18));\n\n        // ToDO - create a preview panel\n        previewPanel = new JPanel();\n        previewPanel.setPreferredSize(new Dimension(220, 120));\n        previewPanel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1));\n        // ToDO - Create a summary panel\n        summaryPanel = new JPanel();\n        summaryPanel.setPreferredSize(new Dimension(220, 90));\n        // TODO - Add them to the pSPanel\n        pSPanel.add(pPLabel, BorderLayout.NORTH);\n        pSPanel.add(previewPanel, BorderLayout.CENTER);\n        pSPanel.add(summaryPanel, BorderLayout.SOUTH);\n        add(pSPanel, BorderLayout.EAST);\n\n        splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, scrollPane, pSPanel);\n        splitPane.setDividerLocation(800); // Initial position of the divider\n        splitPane.setResizeWeight(0.5); // Allows both panels to resize proportionally\n        splitPane.setOneTouchExpandable(true); // Adds a small arrow to collapse/expand\n\n        // Add split pane to frame\n        add(splitPane);\n    }\n\n    public void showPreviewPane(){\n        splitPane.setDividerLocation(550);\n    }\n\n    public void initTable(){\n        // Set up the table\n        String[] columnNames = {\"\",\"Name\", \"Size\", \"Type\", \"Date Modified\"};\n        tableModel = new DefaultTableModel(columnNames, 0){\n            @Override\n            public Class<?> getColumnClass(int columnIndex) {\n                if(columnIndex == 0) return Icon.class;\n                return String.class;\n            }\n        };\n        fileTable = new JTable(tableModel){\n            @Override\n            public boolean isCellEditable(int row, int column) {\n                return false;\n            }\n        };\n        fileTable.setFillsViewportHeight(true);\n        fileTable.getTableHeader().setReorderingAllowed(false);\n\n        // Adjust icon column\n        TableColumn iconColumn = fileTable.getColumnModel().getColumn(0);\n        iconColumn.setPreferredWidth(20);  // Set the column width to fit the icon\n        iconColumn.setMaxWidth(20);        // Prevent it from expanding\n        iconColumn.setResizable(false);    // Disable resizing by the user\n\n        // Enable sorting of table columns\n        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(tableModel);\n        fileTable.setRowSorter(sorter);\n\n        // Custom comparator to place \"Folder\" at the top\n        sorter.setComparator(3, (o1, o2) -> {\n            String type1 = (String) o1;\n            String type2 = (String) o2;\n\n            if (type1.equals(\"Folder\") && !type2.equals(\"Folder\")) {\n                return -1; // Folder should come before non-folders\n            } else if (!type1.equals(\"Folder\") && type2.equals(\"Folder\")) {\n                return 1; // Non-folder should come after folders\n            } else {\n                return ((String) o1).compareTo((String) o2); // Default comparison for non-folder items\n            }\n        });\n\n        // Set row selection feature\n        fileTable.setRowSelectionAllowed(true);\n        fileTable.setColumnSelectionAllowed(false);\n        fileTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);\n\n        // Add the table to a scroll pane and add it to the frame\n        scrollPane = new JScrollPane(fileTable);\n        add(scrollPane, BorderLayout.CENTER);\n    }\n\n    public void initAddressBar(){\n        JPanel panel = new JPanel();\n        panel.setPreferredSize(new Dimension(800, 25));\n        panel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1));\n        panel.setLayout(new FlowLayout(FlowLayout.LEFT));\n        currentDirectory = new JLabel(workingDirectory);\n        panel.add(currentDirectory);\n        add(panel, BorderLayout.SOUTH);\n    }\n\n    public void expandFolder(List<FileNode> fileNodes){\n        tableModel.setRowCount(0);\n        fileNodeMap.clear();\n        int x = 0;\n\n        // TODO - This should be in FileNode class\n        for(FileNode fileNode : fileNodes){\n            Object[] row = {\n                    fileNode.getImg(),\n                    fileNode.getName(),\n                    fileNode.convertSize(),\n                    fileNode.getType(),\n                    fileNode.getLastModified()\n            };\n            tableModel.addRow(row);\n            fileNodeMap.put(x,fileNode);\n            x++;\n        }\n    }\n\n    public JTable getFileTable() {\n        return fileTable;\n    }\n\n    public void setFileTable(JTable fileTable) {\n        this.fileTable = fileTable;\n    }\n\n    public DefaultTableModel getTableModel() {\n        return tableModel;\n    }\n\n    public void setTableModel(DefaultTableModel tableModel) {\n        this.tableModel = tableModel;\n    }\n\n    public Map<Integer, FileNode> getFileNodeMap() {\n        return fileNodeMap;\n    }\n\n    public void setFileNodeMap(Map<Integer, FileNode> fileNodeMap) {\n        this.fileNodeMap = fileNodeMap;\n    }\n\n    public JPanel getHeaderPanel() {\n        return headerPanel;\n    }\n\n    public void setHeaderPanel(JPanel headerPanel) {\n        this.headerPanel = headerPanel;\n    }\n\n    public JButton getBackBtn() {\n        return backBtn;\n    }\n\n    public void setBackBtn(JButton backBtn) {\n        this.backBtn = backBtn;\n    }\n\n    public JButton getForwardBtn() {\n        return forwardBtn;\n    }\n\n    public void setForwardBtn(JButton forwardBtn) {\n        this.forwardBtn = forwardBtn;\n    }\n    public void setWorkingDir(String workingDir){\n        this.workingDirectory = workingDir;\n        currentDirectory.setText(workingDirectory);\n        repaint();\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/View/AtlasWindow.java b/src/View/AtlasWindow.java
+--- a/src/View/AtlasWindow.java	(revision 80c0a826115f66c896b2122849d4b94c63c5c791)
++++ b/src/View/AtlasWindow.java	(date 1731308966808)
+@@ -116,6 +116,7 @@
+         };
+         fileTable.setFillsViewportHeight(true);
+         fileTable.getTableHeader().setReorderingAllowed(false);
++        fileTable.setShowGrid(false);
+ 
+         // Adjust icon column
+         TableColumn iconColumn = fileTable.getColumnModel().getColumn(0);
+@@ -231,6 +232,6 @@
+     public void setWorkingDir(String workingDir){
+         this.workingDirectory = workingDir;
+         currentDirectory.setText(workingDirectory);
+-        repaint();
++//        repaint();
+     }
+ }
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"AutoImportSettings\">\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\n  </component>\n  <component name=\"ChangeListManager\">\n    <list default=\"true\" id=\"bf36a44c-d11a-492e-8ae4-e30373eca3ed\" name=\"Changes\" comment=\"Basic outline for File Browser implemented and some functionality\">\n      <change afterPath=\"$PROJECT_DIR$/src/Model/DriveDetector.java\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/FileBrowserApp.iml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/FileBrowserApp.iml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/out/production/FileBrowserApp/Controller/AtlasWindowController$1.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/FileBrowserApp/Controller/AtlasWindowController$1.class\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/out/production/FileBrowserApp/Controller/AtlasWindowController$2.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/FileBrowserApp/Controller/AtlasWindowController$2.class\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/out/production/FileBrowserApp/Controller/AtlasWindowController$3.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/FileBrowserApp/Controller/AtlasWindowController$3.class\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/out/production/FileBrowserApp/Controller/AtlasWindowController.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/FileBrowserApp/Controller/AtlasWindowController.class\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/out/production/FileBrowserApp/Main.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/FileBrowserApp/Main.class\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/out/production/FileBrowserApp/Model/FileNode.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/FileBrowserApp/Model/FileNode.class\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/out/production/FileBrowserApp/View/AtlasWindow.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/FileBrowserApp/View/AtlasWindow.class\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/src/Controller/AtlasWindowController.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/Controller/AtlasWindowController.java\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/src/Main.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/Main.java\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/src/Main2.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/Main2.java\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/src/Model/FileNode.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/Model/FileNode.java\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/src/View/AtlasWindow.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/View/AtlasWindow.java\" afterDir=\"false\" />\n    </list>\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\n  </component>\n  <component name=\"FileTemplateManagerImpl\">\n    <option name=\"RECENT_TEMPLATES\">\n      <list>\n        <option value=\"Class\" />\n      </list>\n    </option>\n  </component>\n  <component name=\"Git.Pull.Settings\">\n    <option name=\"OPTIONS\">\n      <set>\n        <option value=\"REBASE\" />\n      </set>\n    </option>\n  </component>\n  <component name=\"Git.Settings\">\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\n  </component>\n  <component name=\"GitHubPullRequestSearchHistory\">{\n  &quot;lastFilter&quot;: {\n    &quot;state&quot;: &quot;OPEN&quot;,\n    &quot;assignee&quot;: &quot;csLamar12&quot;\n  }\n}</component>\n  <component name=\"GithubPullRequestsUISettings\">{\n  &quot;selectedUrlAndAccountId&quot;: {\n    &quot;url&quot;: &quot;https://github.com/csLamar12/Atlas-File-Browser.git&quot;,\n    &quot;accountId&quot;: &quot;02de9c49-d9ac-4223-93b9-621c2b16c58e&quot;\n  }\n}</component>\n  <component name=\"KubernetesApiPersistence\">{}</component>\n  <component name=\"KubernetesApiProvider\">{\n  &quot;isMigrated&quot;: true\n}</component>\n  <component name=\"ProjectColorInfo\">{\n  &quot;associatedIndex&quot;: 2\n}</component>\n  <component name=\"ProjectId\" id=\"2oVZx0RKUnxtXiv9eaWk9eSGYj3\" />\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\n  <component name=\"ProjectViewState\">\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\n    <option name=\"showLibraryContents\" value=\"true\" />\n  </component>\n  <component name=\"PropertiesComponent\"><![CDATA[{\n  \"keyToString\": {\n    \"Application.DriveDetector.executor\": \"Run\",\n    \"Application.FilePanel.executor\": \"Run\",\n    \"Application.Main.executor\": \"Run\",\n    \"Application.Main2.executor\": \"Run\",\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\n    \"SHARE_PROJECT_CONFIGURATION_FILES\": \"true\",\n    \"git-widget-placeholder\": \"main\",\n    \"kotlin-language-version-configured\": \"true\",\n    \"last_opened_file_path\": \"/Users/lamar/Documents/Java/Advanced Programming/FileBrowserApp/src\",\n    \"node.js.detected.package.eslint\": \"true\",\n    \"node.js.detected.package.tslint\": \"true\",\n    \"node.js.selected.package.eslint\": \"(autodetect)\",\n    \"node.js.selected.package.tslint\": \"(autodetect)\",\n    \"nodejs_package_manager_path\": \"npm\",\n    \"project.structure.last.edited\": \"Modules\",\n    \"project.structure.proportion\": \"0.15\",\n    \"project.structure.side.proportion\": \"0.2\",\n    \"vue.rearranger.settings.migration\": \"true\"\n  }\n}]]></component>\n  <component name=\"RecentsManager\">\n    <key name=\"CopyFile.RECENT_KEYS\">\n      <recent name=\"$PROJECT_DIR$/src\" />\n    </key>\n    <key name=\"MoveFile.RECENT_KEYS\">\n      <recent name=\"$PROJECT_DIR$/src/JarFiles\" />\n      <recent name=\"$PROJECT_DIR$/src/Resources\" />\n    </key>\n  </component>\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\n  <component name=\"TaskManager\">\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\n      <changelist id=\"bf36a44c-d11a-492e-8ae4-e30373eca3ed\" name=\"Changes\" comment=\"\" />\n      <created>1730956945530</created>\n      <option name=\"number\" value=\"Default\" />\n      <option name=\"presentableId\" value=\"Default\" />\n      <updated>1730956945530</updated>\n      <workItem from=\"1730956946518\" duration=\"720000\" />\n      <workItem from=\"1730958400676\" duration=\"11087000\" />\n    </task>\n    <task id=\"LOCAL-00001\" summary=\"jk\">\n      <option name=\"closed\" value=\"true\" />\n      <created>1730958603768</created>\n      <option name=\"number\" value=\"00001\" />\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1730958603768</updated>\n    </task>\n    <task id=\"LOCAL-00002\" summary=\"first commit\">\n      <option name=\"closed\" value=\"true\" />\n      <created>1730958742366</created>\n      <option name=\"number\" value=\"00002\" />\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1730958742366</updated>\n    </task>\n    <task id=\"LOCAL-00003\" summary=\"Basic outline for File Browser implemented and some functionality\">\n      <option name=\"closed\" value=\"true\" />\n      <created>1731165221004</created>\n      <option name=\"number\" value=\"00003\" />\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1731165221004</updated>\n    </task>\n    <task id=\"LOCAL-00004\" summary=\"Basic outline for File Browser implemented and some functionality\">\n      <option name=\"closed\" value=\"true\" />\n      <created>1731165248046</created>\n      <option name=\"number\" value=\"00004\" />\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1731165248046</updated>\n    </task>\n    <task id=\"LOCAL-00005\" summary=\"Basic outline for File Browser implemented and some functionality\">\n      <option name=\"closed\" value=\"true\" />\n      <created>1731204062873</created>\n      <option name=\"number\" value=\"00005\" />\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1731204062873</updated>\n    </task>\n    <option name=\"localTasksCounter\" value=\"6\" />\n    <servers />\n  </component>\n  <component name=\"TypeScriptGeneratedFilesManager\">\n    <option name=\"version\" value=\"3\" />\n  </component>\n  <component name=\"Vcs.Log.Tabs.Properties\">\n    <option name=\"TAB_STATES\">\n      <map>\n        <entry key=\"MAIN\">\n          <value>\n            <State />\n          </value>\n        </entry>\n      </map>\n    </option>\n  </component>\n  <component name=\"VcsManagerConfiguration\">\n    <MESSAGE value=\"jk\" />\n    <MESSAGE value=\"first commit\" />\n    <MESSAGE value=\"c\" />\n    <MESSAGE value=\"Basic outline for File Browser implemented and some functionality\" />\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"Basic outline for File Browser implemented and some functionality\" />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 80c0a826115f66c896b2122849d4b94c63c5c791)
++++ b/.idea/workspace.xml	(date 1731311276061)
+@@ -4,21 +4,13 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="bf36a44c-d11a-492e-8ae4-e30373eca3ed" name="Changes" comment="Basic outline for File Browser implemented and some functionality">
+-      <change afterPath="$PROJECT_DIR$/src/Model/DriveDetector.java" afterDir="false" />
++    <list default="true" id="bf36a44c-d11a-492e-8ae4-e30373eca3ed" name="Changes" comment="Drive Detector Test">
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/FileBrowserApp.iml" beforeDir="false" afterPath="$PROJECT_DIR$/FileBrowserApp.iml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/FileBrowserApp/Controller/AtlasWindowController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/FileBrowserApp/Controller/AtlasWindowController$1.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/FileBrowserApp/Controller/AtlasWindowController$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/FileBrowserApp/Controller/AtlasWindowController$2.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/FileBrowserApp/Controller/AtlasWindowController$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/FileBrowserApp/Controller/AtlasWindowController$3.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/FileBrowserApp/Controller/AtlasWindowController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/FileBrowserApp/Controller/AtlasWindowController.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/FileBrowserApp/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/FileBrowserApp/Main.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/FileBrowserApp/Model/FileNode.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/FileBrowserApp/Model/FileNode.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/FileBrowserApp/Main2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/FileBrowserApp/Main2.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/FileBrowserApp/Model/DriveDetector.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/FileBrowserApp/Model/DriveDetector.class" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/out/production/FileBrowserApp/View/AtlasWindow.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/FileBrowserApp/View/AtlasWindow.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/Controller/AtlasWindowController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/AtlasWindowController.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/Main2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main2.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/Model/FileNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/FileNode.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/Model/DriveDetector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/DriveDetector.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/View/AtlasWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/AtlasWindow.java" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+@@ -49,12 +41,12 @@
+     &quot;assignee&quot;: &quot;csLamar12&quot;
+   }
+ }</component>
+-  <component name="GithubPullRequestsUISettings">{
+-  &quot;selectedUrlAndAccountId&quot;: {
+-    &quot;url&quot;: &quot;https://github.com/csLamar12/Atlas-File-Browser.git&quot;,
+-    &quot;accountId&quot;: &quot;02de9c49-d9ac-4223-93b9-621c2b16c58e&quot;
+-  }
+-}</component>
++  <component name="GithubPullRequestsUISettings"><![CDATA[{
++  "selectedUrlAndAccountId": {
++    "url": "https://github.com/csLamar12/Atlas-File-Browser.git",
++    "accountId": "6707895e-3225-486b-b46c-68c20f171596"
++  }
++}]]></component>
+   <component name="KubernetesApiPersistence">{}</component>
+   <component name="KubernetesApiProvider">{
+   &quot;isMigrated&quot;: true
+@@ -68,28 +60,28 @@
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent"><![CDATA[{
+-  "keyToString": {
+-    "Application.DriveDetector.executor": "Run",
+-    "Application.FilePanel.executor": "Run",
+-    "Application.Main.executor": "Run",
+-    "Application.Main2.executor": "Run",
+-    "RunOnceActivity.ShowReadmeOnStart": "true",
+-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+-    "git-widget-placeholder": "main",
+-    "kotlin-language-version-configured": "true",
+-    "last_opened_file_path": "/Users/lamar/Documents/Java/Advanced Programming/FileBrowserApp/src",
+-    "node.js.detected.package.eslint": "true",
+-    "node.js.detected.package.tslint": "true",
+-    "node.js.selected.package.eslint": "(autodetect)",
+-    "node.js.selected.package.tslint": "(autodetect)",
+-    "nodejs_package_manager_path": "npm",
+-    "project.structure.last.edited": "Modules",
+-    "project.structure.proportion": "0.15",
+-    "project.structure.side.proportion": "0.2",
+-    "vue.rearranger.settings.migration": "true"
++  <component name="PropertiesComponent">{
++  &quot;keyToString&quot;: {
++    &quot;Application.DriveDetector.executor&quot;: &quot;Run&quot;,
++    &quot;Application.FilePanel.executor&quot;: &quot;Run&quot;,
++    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
++    &quot;Application.Main2.executor&quot;: &quot;Run&quot;,
++    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
++    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
++    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
++    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
++    &quot;last_opened_file_path&quot;: &quot;/Users/lamar/Documents/Java/Advanced Programming/FileBrowserApp/src&quot;,
++    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
++    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
++    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
++    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
++    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
++    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
++    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
++    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
++    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+   }
+-}]]></component>
++}</component>
+   <component name="RecentsManager">
+     <key name="CopyFile.RECENT_KEYS">
+       <recent name="$PROJECT_DIR$/src" />
+@@ -98,6 +90,14 @@
+       <recent name="$PROJECT_DIR$/src/JarFiles" />
+       <recent name="$PROJECT_DIR$/src/Resources" />
+     </key>
++  </component>
++  <component name="SharedIndexes">
++    <attachedChunks>
++      <set>
++        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23339.11" />
++        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23339.11" />
++      </set>
++    </attachedChunks>
+   </component>
+   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+   <component name="TaskManager">
+@@ -109,6 +109,7 @@
+       <updated>1730956945530</updated>
+       <workItem from="1730956946518" duration="720000" />
+       <workItem from="1730958400676" duration="11087000" />
++      <workItem from="1731263727016" duration="4984000" />
+     </task>
+     <task id="LOCAL-00001" summary="jk">
+       <option name="closed" value="true" />
+@@ -150,7 +151,15 @@
+       <option name="project" value="LOCAL" />
+       <updated>1731204062873</updated>
+     </task>
+-    <option name="localTasksCounter" value="6" />
++    <task id="LOCAL-00006" summary="Drive Detector Test">
++      <option name="closed" value="true" />
++      <created>1731263215772</created>
++      <option name="number" value="00006" />
++      <option name="presentableId" value="LOCAL-00006" />
++      <option name="project" value="LOCAL" />
++      <updated>1731263215772</updated>
++    </task>
++    <option name="localTasksCounter" value="7" />
+     <servers />
+   </component>
+   <component name="TypeScriptGeneratedFilesManager">
+@@ -172,6 +181,7 @@
+     <MESSAGE value="first commit" />
+     <MESSAGE value="c" />
+     <MESSAGE value="Basic outline for File Browser implemented and some functionality" />
+-    <option name="LAST_COMMIT_MESSAGE" value="Basic outline for File Browser implemented and some functionality" />
++    <MESSAGE value="Drive Detector Test" />
++    <option name="LAST_COMMIT_MESSAGE" value="Drive Detector Test" />
+   </component>
+ </project>
+\ No newline at end of file

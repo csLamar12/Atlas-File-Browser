@@ -1,12 +1,18 @@
 package View;
 
+import Controller.ImageBasedPreview;
+import Controller.PDFPreview;
+import Controller.TextBasedPreview;
+import Controller.VideoBasedPreview;
 import Model.FileNode;
+import javafx.scene.media.MediaException;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +28,7 @@ public class AtlasWindow extends JFrame {
     private JSplitPane splitPane;
     private String workingDirectory;
     private JLabel currentDirectory;
+    VideoBasedPreview videoVideoBasedPreview;
 
     public AtlasWindow() {
         setTitle("Atlas");
@@ -75,11 +82,13 @@ public class AtlasWindow extends JFrame {
 
         // ToDO - create a preview panel
         previewPanel = new JPanel();
-        previewPanel.setPreferredSize(new Dimension(220, 120));
+        previewPanel.setPreferredSize(new Dimension(220, 20));
         previewPanel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1));
+        previewPanel.setLayout(new BorderLayout());
         // ToDO - Create a summary panel
         summaryPanel = new JPanel();
-        summaryPanel.setPreferredSize(new Dimension(220, 90));
+        summaryPanel.setPreferredSize(new Dimension(220, 180));
+        summaryPanel.setLayout(new BorderLayout());
         // TODO - Add them to the pSPanel
         pSPanel.add(pPLabel, BorderLayout.NORTH);
         pSPanel.add(previewPanel, BorderLayout.CENTER);
@@ -96,12 +105,13 @@ public class AtlasWindow extends JFrame {
     }
 
     public void showPreviewPane(){
+        previewPanel.removeAll();
         splitPane.setDividerLocation(550);
     }
 
     public void initTable(){
         // Set up the table
-        String[] columnNames = {"","Name", "Size", "Type", "Date Modified"};
+        String[] columnNames = {"","Name", "Size", "Type","Date Modified"};
         tableModel = new DefaultTableModel(columnNames, 0){
             @Override
             public Class<?> getColumnClass(int columnIndex) {
@@ -131,7 +141,7 @@ public class AtlasWindow extends JFrame {
         fileTable.setRowSorter(sorter);
 
         // Custom comparator to place "Folder" at the top
-        sorter.setComparator(3, (o1, o2) -> {
+        sorter.setComparator(4, (o1, o2) -> {
             String type1 = (String) o1;
             String type2 = (String) o2;
 
@@ -169,20 +179,25 @@ public class AtlasWindow extends JFrame {
         fileNodeMap.clear();
         int x = 0;
 
-        // TODO - This should be in FileNode class
         for(FileNode fileNode : fileNodes){
             Object[] row = {
                     fileNode.getImg(),
                     fileNode.getName(),
-                    fileNode.convertSize(),
+                    fileNode.convertSize(), // Human-readable size string
                     fileNode.getType(),
                     fileNode.getLastModified()
             };
             tableModel.addRow(row);
-            fileNodeMap.put(x,fileNode);
+            fileNodeMap.put(x, fileNode);
             x++;
         }
     }
+
+
+    public FileNode getFileNodeAt(int modelIndex) {
+        return fileNodeMap.get(modelIndex);
+    }
+
 
     public JTable getFileTable() {
         return fileTable;
@@ -235,5 +250,53 @@ public class AtlasWindow extends JFrame {
         currentDirectory.setText(workingDir);
         repaint();
     }
+
+    // File Preview Methods
+    public void addVideoPreview(String videoPath){
+        try {
+            videoVideoBasedPreview = new VideoBasedPreview(videoPath);
+            previewPanel.add(videoVideoBasedPreview);
+        } catch (MediaException e) {
+            System.out.println("MediaException: " + e.getMessage());
+        }
+    }
+
+    public VideoBasedPreview getVideoPreview(){
+        return videoVideoBasedPreview;
+    }
+
+    public void addTextBasedPreview(File file) {
+        TextBasedPreview tbp = new TextBasedPreview(file.getAbsolutePath());
+
+        JTextArea textArea = new JTextArea();
+        textArea.setEditable(false);
+        textArea.setLineWrap(true);
+        textArea.setWrapStyleWord(true); // Wraps by word rather than character
+        textArea.setFont(new Font("Monospaced", Font.PLAIN, 12));
+
+        // Set the content from the TextBasedPreview
+        textArea.append(tbp.showPreview());
+        textArea.setCaretPosition(0);
+
+        // Wrap the JTextArea in a JScrollPane for scrollability
+        JScrollPane scrollPane = new JScrollPane(textArea);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+
+        // Add the JScrollPane to the preview panel
+        previewPanel.add(scrollPane, BorderLayout.CENTER);
+    }
+
+    public void addImageBasedPreview(String imagePath) {
+        ImageBasedPreview ibp = new ImageBasedPreview(imagePath);
+        JLabel imageLabel = new JLabel(new ImageIcon(ibp.showPreview())); // Set the scaled image to JLabel
+        previewPanel.add(imageLabel);
+    }
+
+    public void addPDFBasedPreview(String pdfPath) {
+        PDFPreview pdfPreview = new PDFPreview(pdfPath);
+//        previewPanel.add(pdfPreview.showPreview());
+    }
+
 
 }

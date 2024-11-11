@@ -28,22 +28,22 @@ public class FileSignatureReader {
         fileSignatures.put(new byte[]{66, 77}, "Bitmap File (.bmp)");
 
         // Video files
-        fileSignatures.put(new byte[]{0, 0, 1, -80}, "MPEG Video File (.mpg, .mpeg)");
-        fileSignatures.put(new byte[]{0, 0, 1, -79}, "MPEG Video File (.mpg, .mpeg)");
-        fileSignatures.put(new byte[]{0, 0, 0, 24, 102, 116, 121, 112}, "MPEG-4 Video File (.mp4, .mpeg)");
-        fileSignatures.put(new byte[]{0, 0, 0, 20, 102, 116, 121, 112}, "MOV File (.mov)");
-        fileSignatures.put(new byte[]{26, 69, -33, -93}, "MKV File (.mkv)");
+        fileSignatures.put(new byte[]{0, 0, 1, -80}, "MPEG");
+        fileSignatures.put(new byte[]{0, 0, 1, -79}, "MPEG");
+        fileSignatures.put(new byte[]{0, 0, 0, 24, 102, 116, 121, 112}, "MP4");
+        fileSignatures.put(new byte[]{0, 0, 0, 20, 102, 116, 121, 112}, "MOV");
+        fileSignatures.put(new byte[]{26, 69, -33, -93}, "MKV");
 
-        fileSignatures.put(new byte[]{82, 73, 70, 70}, "AVI File (.avi)");
-        fileSignatures.put(new byte[]{70, 76, 86, 1}, "FLV File (.flv)");
+        fileSignatures.put(new byte[]{82, 73, 70, 70}, "AVI");
+        fileSignatures.put(new byte[]{70, 76, 86, 1}, "FLV");
 
         // Audio files
-        fileSignatures.put(new byte[]{73, 68, 51}, "MP3 File (.mp3)");
-        fileSignatures.put(new byte[]{79, 103, 103, 83}, "OGG File (.ogg)");
-        fileSignatures.put(new byte[]{82, 73, 70, 70}, "WAV File (.wav)");
+        fileSignatures.put(new byte[]{73, 68, 51}, "MP3");
+        fileSignatures.put(new byte[]{79, 103, 103, 83}, "OGG");
+        fileSignatures.put(new byte[]{82, 73, 70, 70}, "WAV");
 
         // Document files
-        fileSignatures.put(new byte[]{37, 80, 68, 70, 45}, "PDF File (.pdf)");
+        fileSignatures.put(new byte[]{37, 80, 68, 70, 45}, "PDF");
         fileSignatures.put(new byte[]{80, 75, 3, 4}, "ZIP Archive (.zip, .docx, .xlsx, .pptx)");
         fileSignatures.put(new byte[]{80, 75, 7, 8}, "ZIP Archive (empty) (.zip)");
         fileSignatures.put(new byte[]{-48, -49, 17, -32, -95, -79, 26, -31}, "Microsoft Office Document (.doc, .xls, .ppt)");

@@ -49,6 +49,9 @@ public class FileNode {
         return size + "Bytes";
     }
 
+    public long getSizeInBytes() {
+        return this.file.length();
+    }
     public String getLastModified(){
         setLastModified();
         return this.lastModified;

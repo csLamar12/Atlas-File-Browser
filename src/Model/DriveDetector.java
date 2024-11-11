@@ -1,8 +1,12 @@
 package Model;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DriveDetector {
+
+    private List<FileNode> fileNodes = new ArrayList<>();
 
     public DriveDetector() {
         // Get the list of file roots (like / or C:\)
@@ -10,6 +14,9 @@ public class DriveDetector {
         for (File file : files) {
             // Get the name of the volume associated with the root
             String volumeName = getVolumeName(file);
+            FileNode fileNode = new FileNode(file);
+            fileNode.setName(volumeName);
+            fileNodes.add(fileNode);
             if (volumeName != null) {
                 System.out.println("Volume: " + volumeName + " at " + file.getAbsolutePath());
             } else {
@@ -18,6 +25,9 @@ public class DriveDetector {
         }
     }
 
+    public List<FileNode> getVolumes(){
+        return fileNodes;
+    }
     private String getVolumeName(File file) {
         String os = System.getProperty("os.name").toLowerCase();
         if (os.contains("mac")) {
@@ -28,7 +38,7 @@ public class DriveDetector {
         return null;  // Return null if no method is defined for the OS
     }
 
-    private String getVolumeNameForMac(File file) {
+    public String getVolumeNameForMac(File file) {
         try {
             // For macOS, use the diskutil command to get volume names
             ProcessBuilder builder = new ProcessBuilder("diskutil", "info", file.getAbsolutePath());
