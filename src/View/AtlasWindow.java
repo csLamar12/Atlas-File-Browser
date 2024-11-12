@@ -5,8 +5,6 @@ import Controller.PDFPreview;
 import Controller.TextBasedPreview;
 import Controller.VideoBasedPreview;
 import Model.FileNode;
-import javafx.scene.media.MediaException;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
